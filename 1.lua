@@ -1,3 +1,6 @@
+-- ily liam <3
+loadstring(game:HttpGet("https://raw.githubusercontent.com/liam0999/Drawing2/refs/heads/main/Drawing2.lua"))();
+--
 local ws = game:GetService("Workspace")
 local uis = game:GetService("UserInputService")
 local rs = game:GetService("RunService")
@@ -37,9 +40,6 @@ local library = {
         ping = 0
     }
 }
--- ily liam <3
-loadstring(game:HttpGet("https://raw.githubusercontent.com/liam0999/Drawing2/refs/heads/main/Drawing2.lua"))();
---
 local images = {
 ["hue"] = "https://raw.githubusercontent.com/yukvx/robloxlol/refs/heads/main/gamesneeze/Assets/hue.png";
 ["valsat"] = "https://raw.githubusercontent.com/yukvx/robloxlol/refs/heads/main/gamesneeze/Assets/valsat.png";
