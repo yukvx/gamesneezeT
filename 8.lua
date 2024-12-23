@@ -42,9 +42,9 @@ local library = {
     hovers = {},
     Relations = {},
     folders = {
-        main = "Kazusa.club",
-        assets = "Kazusa.club/Images",
-        configs = "Kazusa.club/Configs"
+        main = "KauzC",
+        assets = "KauzC/Images",
+        configs = "KauzC/Configs"
     },
     shared = {
         initialized = false,
