@@ -44,9 +44,9 @@ local library = {
     hovers = {},
     Relations = {},
     folders = {
-        main = "Atlanta",
-        assets = "Atlanta/Images",
-        configs = "Atlanta/Configs"
+        main = "KauzC",
+        assets = "KauzC/Images",
+        configs = "KauzC/Configs"
     },
     shared = {
         initialized = false,
