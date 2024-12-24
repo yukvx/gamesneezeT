@@ -1,8 +1,4 @@
 --
-local function loadReplicatedDrawingLib()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/yukvx/Kazusa.club/refs/heads/main/library/drawing.lua"))();
-end
---
 local images = {
 ["hue"] = "https://raw.githubusercontent.com/yukvx/robloxlol/refs/heads/main/gamesneeze/Assets/hue.png";
 ["valsat"] = "https://raw.githubusercontent.com/yukvx/robloxlol/refs/heads/main/gamesneeze/Assets/valsat.png";
@@ -33,7 +29,7 @@ local Remove = table.remove
 local Unpack = table.unpack
 local Find = table.find
 --
-local library = {
+local kazusaclubU = {
     drawings = {},
     objects = {},
     hidden = {},
@@ -142,7 +138,7 @@ do
             frame.Size = Vector2.new(100,100)
             frame.Position = Vector2.new(0,0)
             frame.ZIndex = 50
-            frame.Transparency = library.shared.initialized and 1 or 0
+            frame.Transparency = kazusaclubU.shared.initialized and 1 or 0
             instance = frame
         elseif instanceType == "TextLabel" or instanceType == "textlabel" then
             local text = Drawing.new("Text")
@@ -152,7 +148,7 @@ do
             text.Center = false
             text.Color = Color3.fromRGB(255,255,255)
             text.ZIndex = 50
-            text.Transparency = library.shared.initialized and 1 or 0
+            text.Transparency = kazusaclubU.shared.initialized and 1 or 0
             instance = text
         elseif instanceType == "Triangle" or instanceType == "triangle" then
             local frame = Drawing.new("Triangle")
@@ -161,7 +157,7 @@ do
             frame.Thickness = 0
             frame.Color = Color3.fromRGB(255,255,255)
             frame.ZIndex = 50
-            frame.Transparency = library.shared.initialized and 1 or 0
+            frame.Transparency = kazusaclubU.shared.initialized and 1 or 0
             instance = frame
         elseif instanceType == "Image" or instanceType == "image" then
             local image = Drawing.new("Image")
@@ -169,7 +165,7 @@ do
             image.Position = Vector2.new(0,0)
             image.Visible = true
             image.ZIndex = 50
-            image.Transparency = library.shared.initialized and 1 or 0
+            image.Transparency = kazusaclubU.shared.initialized and 1 or 0
             instance = image
         elseif instanceType == "Circle" or instanceType == "circle" then
             local circle = Drawing.new("Circle")
@@ -181,7 +177,7 @@ do
             circle.Transparency = 1
             circle.ZIndex = 50
             circle.Radius = 50
-            circle.Transparency = library.shared.initialized and 1 or 0
+            circle.Transparency = kazusaclubU.shared.initialized and 1 or 0
             instance = circle
         elseif instanceType == "Quad" or instanceType == "quad" then
             local quad = Drawing.new("Quad")
@@ -191,7 +187,7 @@ do
             quad.Transparency = 1
             quad.ZIndex = 50
             quad.Filled = false
-            quad.Transparency = library.shared.initialized and 1 or 0
+            quad.Transparency = kazusaclubU.shared.initialized and 1 or 0
             instance = quad
         elseif instanceType == "Line" or instanceType == "line" then
             local line = Drawing.new("Line")
@@ -201,7 +197,7 @@ do
             line.Transparency = 1
             line.Thickness = 1.5
             line.ZIndex = 50
-            line.Transparency = library.shared.initialized and 1 or 0
+            line.Transparency = kazusaclubU.shared.initialized and 1 or 0
             instance = line
         end
         --
@@ -210,7 +206,7 @@ do
                 if i == "Hidden" or i == "hidden" then
                     instanceHidden = true
                 else
-                    if library.shared.initialized then
+                    if kazusaclubU.shared.initialized then
                         instance[i] = v
                     else
                         if instanceProperties.Hidden or instanceProperties.hidden then
@@ -225,9 +221,9 @@ do
             end
             --
             if not instanceHidden then
-                library.drawings[#library.drawings + 1] = {instance, instanceOffset, instanceProperties["Transparency"] or 1}
+                kazusaclubU.drawings[#kazusaclubU.drawings + 1] = {instance, instanceOffset, instanceProperties["Transparency"] or 1}
             else
-                library.hidden[#library.hidden + 1] = {instance}
+                kazusaclubU.hidden[#kazusaclubU.hidden + 1] = {instance}
             end
             --
             if instanceParent then
@@ -245,18 +241,18 @@ do
             Object[Index] = Value
         end
         --
-        library.objects[Object] = true
+        kazusaclubU.objects[Object] = true
         --
         return Object
     end
     --
     function utility:RemoveInstance(Object)
-        library.objects[Object] = nil
+        kazusaclubU.objects[Object] = nil
         Object:Remove()
     end
     --
     function utility:UpdateOffset(instance, instanceOffset)
-        for i,v in pairs(library.drawings) do
+        for i,v in pairs(kazusaclubU.drawings) do
             if v[1] == instance then
                 v[2] = instanceOffset
             end
@@ -264,7 +260,7 @@ do
     end
     --
     function utility:UpdateTransparency(instance, instanceTransparency)
-        for i,v in pairs(library.drawings) do
+        for i,v in pairs(kazusaclubU.drawings) do
             if v[1] == instance then
                 v[3] = instanceTransparency
             end
@@ -272,11 +268,11 @@ do
     end
     --
     function utility:Remove(instance, hidden)
-        library.colors[instance] = nil
+        kazusaclubU.colors[instance] = nil
         --
         local ind = 0
         --
-        for i,v in pairs(hidden and library.hidden or library.drawings) do
+        for i,v in pairs(hidden and kazusaclubU.hidden or kazusaclubU.drawings) do
             if v[1] == instance then
                 ind = i
                 if hidden then
@@ -288,7 +284,7 @@ do
             end
         end
         --
-        Remove(hidden and library.hidden or library.drawings, ind)
+        Remove(hidden and kazusaclubU.hidden or kazusaclubU.drawings, ind)
         instance:Remove()
     end
     --
@@ -306,15 +302,15 @@ do
     --
     function utility:Connection(connectionType, connectionCallback)
         local connection = connectionType:Connect(connectionCallback)
-        library.connections[#library.connections + 1] = connection
+        kazusaclubU.connections[#kazusaclubU.connections + 1] = connection
         --
         return connection
     end
     --
     function utility:Disconnect(connection)
-        for i,v in pairs(library.connections) do
+        for i,v in pairs(kazusaclubU.connections) do
             if v == connection then
-                library.connections[i] = nil
+                kazusaclubU.connections[i] = nil
                 v:Disconnect()
             end
         end
@@ -360,12 +356,12 @@ do
     function utility:LoadImage(instance, imageName, imageLink)
         local data
         --
-        if isfile(library.folders.assets.."/"..imageName..".Kzc") then
-            data = readfile(library.folders.assets.."/"..imageName..".Kzc")
+        if isfile(kazusaclubU.folders.assets.."/"..imageName..".Kzc") then
+            data = readfile(kazusaclubU.folders.assets.."/"..imageName..".Kzc")
         else
             if imageLink then
                 data = game:HttpGet(imageLink)
-                writefile(library.folders.assets.."/"..imageName..".Kzc", data)
+                writefile(kazusaclubU.folders.assets.."/"..imageName..".Kzc", data)
             else
                 return
             end
@@ -440,16 +436,16 @@ do
         end
     end
 end
--- // Library Functions
+-- // kazusaclubU Functions
 do
-    library.__index = library
+    kazusaclubU.__index = kazusaclubU
 	pages.__index = pages
 	sections.__index = sections
     --
-    function library:Notification(info)
+    function kazusaclubU:Notification(info)
     end
     --
-    function library:Loader(info)
+    function kazusaclubU:Loader(info)
 		local info = info or {}
         local name = info.name or info.Name or info.title or info.Title or "UI Title"
         local size = info.size or info.Size or Vector2.new(375,359)
@@ -467,7 +463,7 @@ do
             Color = theme.outline
         });window["main_frame"] = main_frame
         --
-        library.colors[main_frame] = {
+        kazusaclubU.colors[main_frame] = {
             Color = "outline"
         }
         --
@@ -477,7 +473,7 @@ do
             Color = theme.accent
         })
         --
-        library.colors[frame_inline] = {
+        kazusaclubU.colors[frame_inline] = {
             Color = "accent"
         }
         --
@@ -487,7 +483,7 @@ do
             Color = theme.lightcontrast
         })
         --
-        library.colors[inner_frame] = {
+        kazusaclubU.colors[inner_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -500,7 +496,7 @@ do
             Position = utility:Position(0, 4, 0, 2, inner_frame)
         })
         --
-        library.colors[title] = {
+        kazusaclubU.colors[title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -511,7 +507,7 @@ do
             Color = theme.inline
         })
         --
-        library.colors[inner_frame_inline] = {
+        kazusaclubU.colors[inner_frame_inline] = {
             Color = "inline"
         }
         --
@@ -521,7 +517,7 @@ do
             Color = theme.outline
         })
         --
-        library.colors[inner_frame_inline2] = {
+        kazusaclubU.colors[inner_frame_inline2] = {
             Color = "outline"
         }
         --
@@ -531,7 +527,7 @@ do
             Color = theme.darkcontrast
         });window["back_frame"] = back_frame
         --
-        library.colors[back_frame] = {
+        kazusaclubU.colors[back_frame] = {
             Color = "darkcontrast"
         }
         --
@@ -541,7 +537,7 @@ do
             Color = theme.outline
         })
         --
-        library.colors[tab_frame_inline] = {
+        kazusaclubU.colors[tab_frame_inline] = {
             Color = "outline"
         }
         --
@@ -551,7 +547,7 @@ do
             Color = theme.inline
         })
         --
-        library.colors[tab_frame_inline2] = {
+        kazusaclubU.colors[tab_frame_inline2] = {
             Color = "inline"
         }
         --
@@ -561,7 +557,7 @@ do
             Color = theme.lightcontrast
         });window["tab_frame"] = tab_frame
         --
-        library.colors[tab_frame] = {
+        kazusaclubU.colors[tab_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -570,7 +566,7 @@ do
         end
         --
         function window:Move(vector)
-            for i,v in pairs(library.drawings) do
+            for i,v in pairs(kazusaclubU.drawings) do
                 if v[2][2] then
                     v[1].Position = utility:Position(0, v[2][1].X, 0, v[2][1].Y, v[2][2])
                 else
@@ -653,12 +649,12 @@ do
         end
         --
         function window:Unload()
-            for i,v in pairs(library.connections) do
+            for i,v in pairs(kazusaclubU.connections) do
                 v:Disconnect()
                 v = nil
             end
             --
-            for i,v in next, library.hidden do
+            for i,v in next, kazusaclubU.hidden do
                 coroutine.wrap(function()
                     if v[1] and v[1].Remove and v[1].__OBJECT_EXISTS then
                         local instance = v[1]
@@ -670,7 +666,7 @@ do
                 end)()
             end
             --
-            for i,v in pairs(library.drawings) do
+            for i,v in pairs(kazusaclubU.drawings) do
                 coroutine.wrap(function()
                     if v[1].__OBJECT_EXISTS then
                         local instance = v[1]
@@ -683,32 +679,32 @@ do
                 end)()
             end
             --
-            for i,v in pairs(library.objects) do
+            for i,v in pairs(kazusaclubU.objects) do
                 i:Remove()
             end
             --
-            for i,v in pairs(library.began) do
+            for i,v in pairs(kazusaclubU.began) do
                 v = nil
             end
             --
-            for i,v in pairs(library.ended) do
+            for i,v in pairs(kazusaclubU.ended) do
                 v = nil
             end
             --
-            for i,v in pairs(library.changed) do
+            for i,v in pairs(kazusaclubU.changed) do
                 v = nil
             end
             --
-            library.shared.initialized = false
-            library.drawings = {}
-            library.objects = {}
-            library.hidden = {}
-            library.connections = {}
-            library.began = {}
-            library.ended = {}
-            library.changed = {}
-            library.pointers = {}
-            library.colors = {}
+            kazusaclubU.shared.initialized = false
+            kazusaclubU.drawings = {}
+            kazusaclubU.objects = {}
+            kazusaclubU.hidden = {}
+            kazusaclubU.connections = {}
+            kazusaclubU.began = {}
+            kazusaclubU.ended = {}
+            kazusaclubU.changed = {}
+            kazusaclubU.pointers = {}
+            kazusaclubU.colors = {}
             --
             uis.MouseIconEnabled = true
         end
@@ -724,7 +720,7 @@ do
                 Hidden = true
             });window.cursor["cursor"] = cursor
             --
-            library.colors[cursor] = {
+            kazusaclubU.colors[cursor] = {
                 Color = "cursoroutline"
             }
             --
@@ -736,7 +732,7 @@ do
                 Hidden = true
             });window.cursor["cursor_inline"] = cursor_inline
             --
-            library.colors[cursor_inline] = {
+            kazusaclubU.colors[cursor_inline] = {
                 Color = "accent"
             }
             --
@@ -762,7 +758,7 @@ do
             window.isVisible = not window.isVisible
             --
             spawn(function()
-                for i, v in pairs(library.drawings) do
+                for i, v in pairs(kazusaclubU.drawings) do
                     utility:Lerp(v[1], {Transparency = window.isVisible and v[3] or 0}, 0.25)
                 end
             end)
@@ -781,14 +777,14 @@ do
                 v:Update()
             end
             --
-            library.shared.initialized = true
+            kazusaclubU.shared.initialized = true
             --
             window:Cursor()
             --
             window:Fade()
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and window.isVisible and utility:MouseOverDrawing({main_frame.Position.X,main_frame.Position.Y,main_frame.Position.X + main_frame.Size.X,main_frame.Position.Y + 20}) then
                 local mouseLocation = utility:MouseLocation()
                 --
@@ -821,7 +817,7 @@ do
             end
         end
         --
-        library.ended[#library.ended + 1] = function(Input)
+        kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and window.dragging then
                 window.dragging = false
                 window.drag = Vector2.new(0, 0)
@@ -834,7 +830,7 @@ do
             end
         end
         --
-        library.changed[#library.changed + 1] = function(Input)
+        kazusaclubU.changed[#kazusaclubU.changed + 1] = function(Input)
             if window.dragging and window.isVisible then
                 local mouseLocation = utility:MouseLocation()
                 if utility:GetScreenSize().Y-main_frame.Size.Y-5 > 5 then
@@ -847,7 +843,7 @@ do
             end
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.KeyCode == Enum.KeyCode.P then
                 local plrs = game:GetService("Players")
                 local plr = plrs.LocalPlayer
@@ -864,7 +860,7 @@ do
         end
         --
         utility:Connection(uis.InputBegan,function(Input)
-            for _, func in pairs(library.began) do
+            for _, func in pairs(kazusaclubU.began) do
                 if not window.dragging then
                     local e,s = pcall(function()
                         func(Input)
@@ -876,7 +872,7 @@ do
         end)
         --
         utility:Connection(uis.InputEnded,function(Input)
-            for _, func in pairs(library.ended) do
+            for _, func in pairs(kazusaclubU.ended) do
                 local e,s = pcall(function()
                     func(Input)
                 end)
@@ -884,7 +880,7 @@ do
         end)
         --
         utility:Connection(uis.InputChanged,function()
-            for _, func in pairs(library.changed) do
+            for _, func in pairs(kazusaclubU.changed) do
                 local e,s = pcall(function()
                     func()
                 end)
@@ -909,10 +905,10 @@ do
             window:Move(Vector2.new((utility:GetScreenSize().X/2) - (size.X/2), (utility:GetScreenSize().Y/2) - (size.Y/2)))
         end)
         --
-		return setmetatable(window, library)
+		return setmetatable(window, kazusaclubU)
 	end
     --
-    function library:New(info)
+    function kazusaclubU:New(info)
 		local info = info or {}
         local name = info.name or info.Name or info.title or info.Title or "UI Title"
         local size = info.size or info.Size or Vector2.new(504,604)
@@ -931,7 +927,7 @@ do
             Color = theme.outline
         });window["main_frame"] = main_frame
         --
-        library.colors[main_frame] = {
+        kazusaclubU.colors[main_frame] = {
             Color = "outline"
         }
         --
@@ -941,7 +937,7 @@ do
             Color = theme.accent
         })
         --
-        library.colors[frame_inline] = {
+        kazusaclubU.colors[frame_inline] = {
             Color = "accent"
         }
         --
@@ -951,7 +947,7 @@ do
             Color = theme.lightcontrast
         })
         --
-        library.colors[inner_frame] = {
+        kazusaclubU.colors[inner_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -964,7 +960,7 @@ do
             Position = utility:Position(0, 4, 0, 2, inner_frame)
         })
         --
-        library.colors[title] = {
+        kazusaclubU.colors[title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -975,7 +971,7 @@ do
             Color = theme.inline
         })
         --
-        library.colors[inner_frame_inline] = {
+        kazusaclubU.colors[inner_frame_inline] = {
             Color = "inline"
         }
         --
@@ -985,7 +981,7 @@ do
             Color = theme.outline
         })
         --
-        library.colors[inner_frame_inline2] = {
+        kazusaclubU.colors[inner_frame_inline2] = {
             Color = "outline"
         }
         --
@@ -995,7 +991,7 @@ do
             Color = theme.darkcontrast
         });window["back_frame"] = back_frame
         --
-        library.colors[back_frame] = {
+        kazusaclubU.colors[back_frame] = {
             Color = "darkcontrast"
         }
         --
@@ -1005,7 +1001,7 @@ do
             Color = theme.outline
         })
         --
-        library.colors[tab_frame_inline] = {
+        kazusaclubU.colors[tab_frame_inline] = {
             Color = "outline"
         }
         --
@@ -1015,7 +1011,7 @@ do
             Color = theme.inline
         })
         --
-        library.colors[tab_frame_inline2] = {
+        kazusaclubU.colors[tab_frame_inline2] = {
             Color = "inline"
         }
         --
@@ -1025,7 +1021,7 @@ do
             Color = theme.lightcontrast
         });window["tab_frame"] = tab_frame
         --
-        library.colors[tab_frame] = {
+        kazusaclubU.colors[tab_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -1049,7 +1045,7 @@ do
         function window:GetConfig()
             local config = {}
             --
-            for i,v in pairs(library.pointers) do
+            for i,v in pairs(kazusaclubU.pointers) do
                 if typeof(v:Get()) == "table" and v:Get().Transparency then
                     local hue, sat, val = v:Get().Color:ToHSV()
                     config[i] = {Color = {hue, sat, val}, Transparency = v:Get().Transparency}
@@ -1065,14 +1061,14 @@ do
             local config = hs:JSONDecode(config)
             --
             for i,v in pairs(config) do
-                if library.pointers[i] then
-                    library.pointers[i]:Set(v)
+                if kazusaclubU.pointers[i] then
+                    kazusaclubU.pointers[i]:Set(v)
                 end
             end
         end
         --
         function window:Move(vector)
-            for i,v in pairs(library.drawings) do
+            for i,v in pairs(kazusaclubU.drawings) do
                 if v[1].Visible then
                     if v[2][2] then
                         v[1].Position = utility:Position(0, v[2][1].X, 0, v[2][1].Y, v[2][2])
@@ -1163,12 +1159,12 @@ do
         end
         --
         function window:Unload()
-            for i,v in pairs(library.connections) do
+            for i,v in pairs(kazusaclubU.connections) do
                 v:Disconnect()
                 v = nil
             end
             --
-            for i,v in next, library.hidden do
+            for i,v in next, kazusaclubU.hidden do
                 coroutine.wrap(function()
                     if v[1] and v[1].Remove and v[1].__OBJECT_EXISTS then
                         local instance = v[1]
@@ -1180,7 +1176,7 @@ do
                 end)()
             end
             --
-            for i,v in pairs(library.drawings) do
+            for i,v in pairs(kazusaclubU.drawings) do
                 coroutine.wrap(function()
                     if v[1].__OBJECT_EXISTS then
                         local instance = v[1]
@@ -1193,29 +1189,29 @@ do
                 end)()
             end
             --
-            for i,v in pairs(library.objects) do
+            for i,v in pairs(kazusaclubU.objects) do
                 i:Remove()
             end
             --
-            for i,v in pairs(library.began) do
+            for i,v in pairs(kazusaclubU.began) do
                 v = nil
             end
             --
-            for i,v in pairs(library.ended) do
+            for i,v in pairs(kazusaclubU.ended) do
                 v = nil
             end
             --
-            for i,v in pairs(library.changed) do
+            for i,v in pairs(kazusaclubU.changed) do
                 v = nil
             end
             --
-            library.drawings = {}
-            library.objects = {}
-            library.hidden = {}
-            library.connections = {}
-            library.began = {}
-            library.ended = {}
-            library.changed = {}
+            kazusaclubU.drawings = {}
+            kazusaclubU.objects = {}
+            kazusaclubU.hidden = {}
+            kazusaclubU.connections = {}
+            kazusaclubU.began = {}
+            kazusaclubU.ended = {}
+            kazusaclubU.changed = {}
             --
             uis.MouseIconEnabled = true
         end
@@ -1237,7 +1233,7 @@ do
                 Visible = window.watermark.visible
             })window.watermark.outline = watermark_outline
             --
-            library.colors[watermark_outline] = {
+            kazusaclubU.colors[watermark_outline] = {
                 Color = "outline"
             }
             --
@@ -1250,7 +1246,7 @@ do
                 Visible = window.watermark.visible
             })
             --
-            library.colors[watermark_inline] = {
+            kazusaclubU.colors[watermark_inline] = {
                 Color = "inline"
             }
             --
@@ -1263,7 +1259,7 @@ do
                 Visible = window.watermark.visible
             })
             --
-            library.colors[watermark_frame] = {
+            kazusaclubU.colors[watermark_frame] = {
                 Color = "lightcontrast"
             }
             --
@@ -1276,7 +1272,7 @@ do
                 Visible = window.watermark.visible
             })
             --
-            library.colors[watermark_accent] = {
+            kazusaclubU.colors[watermark_accent] = {
                 Color = "accent"
             }
             --
@@ -1292,7 +1288,7 @@ do
                 Visible = window.watermark.visible
             })
             --
-            library.colors[watermark_title] = {
+            kazusaclubU.colors[watermark_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -1325,13 +1321,13 @@ do
             local Tick = tick()
             --
             utility:Connection(rs.RenderStepped, function(FPS)
-                library.shared.fps = math.floor(1 / math.abs(temp - tick()))
+                kazusaclubU.shared.fps = math.floor(1 / math.abs(temp - tick()))
                 temp = tick()
-                library.shared.ping = stats.Network:FindFirstChild("ServerStatsItem") and tostring(math.round(stats.Network.ServerStatsItem["Data Ping"]:GetValue())) or "Unknown"
+                kazusaclubU.shared.ping = stats.Network:FindFirstChild("ServerStatsItem") and tostring(math.round(stats.Network.ServerStatsItem["Data Ping"]:GetValue())) or "Unknown"
                 --
                 task.spawn(function()
                     if (tick() - Tick) > 0.15 then
-                        watermark_title.Text = window.wminfo:gsub("$PING", library.shared.ping):gsub("$FPS", library.shared.fps)
+                        watermark_title.Text = window.wminfo:gsub("$PING", kazusaclubU.shared.ping):gsub("$FPS", kazusaclubU.shared.fps)
                         window.watermark:UpdateSize()
                         --
                         Tick = tick()
@@ -1356,7 +1352,7 @@ do
                 Visible = window.keybindslist.visible
             })window.keybindslist.outline = keybindslist_outline
             --
-            library.colors[keybindslist_outline] = {
+            kazusaclubU.colors[keybindslist_outline] = {
                 Color = "outline"
             }
             --
@@ -1369,7 +1365,7 @@ do
                 Visible = window.keybindslist.visible
             })
             --
-            library.colors[keybindslist_inline] = {
+            kazusaclubU.colors[keybindslist_inline] = {
                 Color = "inline"
             }
             --
@@ -1382,7 +1378,7 @@ do
                 Visible = window.keybindslist.visible
             })
             --
-            library.colors[keybindslist_frame] = {
+            kazusaclubU.colors[keybindslist_frame] = {
                 Color = "lightcontrast"
             }
             --
@@ -1395,7 +1391,7 @@ do
                 Visible = window.keybindslist.visible
             })
             --
-            library.colors[keybindslist_accent] = {
+            kazusaclubU.colors[keybindslist_accent] = {
                 Color = "accent"
             }
             --
@@ -1412,7 +1408,7 @@ do
                 Visible = window.keybindslist.visible
             })
             --
-            library.colors[keybindslist_title] = {
+            kazusaclubU.colors[keybindslist_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -1439,7 +1435,7 @@ do
                         Visible = window.keybindslist.visible
                     })
                     --
-                    library.colors[keybind_outline] = {
+                    kazusaclubU.colors[keybind_outline] = {
                         Color = "outline"
                     }
                     --
@@ -1452,7 +1448,7 @@ do
                         Visible = window.keybindslist.visible
                     })
                     --
-                    library.colors[keybind_inline] = {
+                    kazusaclubU.colors[keybind_inline] = {
                         Color = "inline"
                     }
                     --
@@ -1465,7 +1461,7 @@ do
                         Visible = window.keybindslist.visible
                     })
                     --
-                    library.colors[keybind_frame] = {
+                    kazusaclubU.colors[keybind_frame] = {
                         Color = "darkcontrast"
                     }
                     --
@@ -1482,7 +1478,7 @@ do
                         Visible = window.keybindslist.visible
                     })
                     --
-                    library.colors[keybind_title] = {
+                    kazusaclubU.colors[keybind_title] = {
                         OutlineColor = "textborder",
                         Color = "textcolor"
                     }
@@ -1499,7 +1495,7 @@ do
                         Visible = window.keybindslist.visible
                     })
                     --
-                    library.colors[keybind_value] = {
+                    kazusaclubU.colors[keybind_value] = {
                         OutlineColor = "textborder",
                         Color = "textcolor"
                     }
@@ -1588,7 +1584,7 @@ do
                 Visible = window.statuslist.visible
             })window.statuslist.outline = statuslist_outline
             --
-            library.colors[statuslist_outline] = {
+            kazusaclubU.colors[statuslist_outline] = {
                 Color = "outline"
             }
             --
@@ -1601,7 +1597,7 @@ do
                 Visible = window.statuslist.visible
             })
             --
-            library.colors[statuslist_inline] = {
+            kazusaclubU.colors[statuslist_inline] = {
                 Color = "inline"
             }
             --
@@ -1614,7 +1610,7 @@ do
                 Visible = window.statuslist.visible
             })
             --
-            library.colors[statuslist_frame] = {
+            kazusaclubU.colors[statuslist_frame] = {
                 Color = "lightcontrast"
             }
             --
@@ -1627,7 +1623,7 @@ do
                 Visible = window.statuslist.visible
             })
             --
-            library.colors[statuslist_accent] = {
+            kazusaclubU.colors[statuslist_accent] = {
                 Color = "accent"
             }
             --
@@ -1644,7 +1640,7 @@ do
                 Visible = window.statuslist.visible
             })
             --
-            library.colors[statuslist_title] = {
+            kazusaclubU.colors[statuslist_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -1671,7 +1667,7 @@ do
                         Visible = window.statuslist.visible
                     })
                     --
-                    library.colors[status_outline] = {
+                    kazusaclubU.colors[status_outline] = {
                         Color = "outline"
                     }
                     --
@@ -1684,7 +1680,7 @@ do
                         Visible = window.statuslist.visible
                     })
                     --
-                    library.colors[status_inline] = {
+                    kazusaclubU.colors[status_inline] = {
                         Color = "inline"
                     }
                     --
@@ -1697,7 +1693,7 @@ do
                         Visible = window.statuslist.visible
                     })
                     --
-                    library.colors[status_frame] = {
+                    kazusaclubU.colors[status_frame] = {
                         Color = "darkcontrast"
                     }
                     --
@@ -1714,7 +1710,7 @@ do
                         Visible = window.statuslist.visible
                     })
                     --
-                    library.colors[status_title] = {
+                    kazusaclubU.colors[status_title] = {
                         OutlineColor = "textborder",
                         Color = "textcolor"
                     }
@@ -1797,7 +1793,7 @@ do
                 Hidden = true
             });window.cursor["cursor"] = cursor
             --
-            library.colors[cursor] = {
+            kazusaclubU.colors[cursor] = {
                 Color = "cursoroutline"
             }
             --
@@ -1809,7 +1805,7 @@ do
                 Hidden = true
             });window.cursor["cursor_inline"] = cursor_inline
             --
-            library.colors[cursor_inline] = {
+            kazusaclubU.colors[cursor_inline] = {
                 Color = "accent"
             }
             --
@@ -1835,7 +1831,7 @@ do
             window.isVisible = not window.isVisible
             --
             spawn(function()
-                for i, v in pairs(library.drawings) do
+                for i, v in pairs(kazusaclubU.drawings) do
                     utility:Lerp(v[1], {Transparency = window.isVisible and v[3] or 0}, 0.25)
                 end
             end)
@@ -1854,7 +1850,7 @@ do
                 v:Update()
             end
             --
-            library.shared.initialized = true
+            kazusaclubU.shared.initialized = true
             --
             window:Watermark()
             window:KeybindsList()
@@ -1866,7 +1862,7 @@ do
             window:Fade()
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and window.isVisible and utility:MouseOverDrawing({main_frame.Position.X,main_frame.Position.Y,main_frame.Position.X + main_frame.Size.X,main_frame.Position.Y + 20}) then
                 local mouseLocation = utility:MouseLocation()
                 --
@@ -1899,7 +1895,7 @@ do
             end
         end
         --
-        library.ended[#library.ended + 1] = function(Input)
+        kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and window.dragging then
                 window.dragging = false
                 window.drag = Vector2.new(0, 0)
@@ -1912,7 +1908,7 @@ do
             end
         end
         --
-        library.changed[#library.changed + 1] = function(Input)
+        kazusaclubU.changed[#kazusaclubU.changed + 1] = function(Input)
             if window.dragging and window.isVisible then
                 local mouseLocation = utility:MouseLocation()
                 if utility:GetScreenSize().Y-main_frame.Size.Y-5 > 5 then
@@ -1925,7 +1921,7 @@ do
             end
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.KeyCode == window.uibind then
                 window:Fade()
             end
@@ -1944,7 +1940,7 @@ do
         end
         --
         utility:Connection(uis.InputBegan,function(Input)
-            for _, func in pairs(library.began) do
+            for _, func in pairs(kazusaclubU.began) do
                 if not window.dragging then
                     local e,s = pcall(function()
                         func(Input)
@@ -1956,7 +1952,7 @@ do
         end)
         --
         utility:Connection(uis.InputEnded,function(Input)
-            for _, func in pairs(library.ended) do
+            for _, func in pairs(kazusaclubU.ended) do
                 local e,s = pcall(function()
                     func(Input)
                 end)
@@ -1964,7 +1960,7 @@ do
         end)
         --
         utility:Connection(uis.InputChanged,function()
-            for _, func in pairs(library.changed) do
+            for _, func in pairs(kazusaclubU.changed) do
                 local e,s = pcall(function()
                     func()
                 end)
@@ -1989,10 +1985,10 @@ do
             window:Move(Vector2.new((utility:GetScreenSize().X/2) - (size.X/2), (utility:GetScreenSize().Y/2) - (size.Y/2)))
         end)
         --
-		return setmetatable(window, library)
+		return setmetatable(window, kazusaclubU)
 	end
     --
-    function library:Page(info)
+    function kazusaclubU:Page(info)
         local info = info or {}
         local name = info.name or info.Name or info.title or info.Title or "New Page"
         --
@@ -2014,7 +2010,7 @@ do
             Color = theme.outline
         });page["page_button"] = page_button
         --
-        library.colors[page_button] = {
+        kazusaclubU.colors[page_button] = {
             Color = "outline"
         }
         --
@@ -2024,7 +2020,7 @@ do
             Color = theme.inline
         });page["page_button_inline"] = page_button_inline
         --
-        library.colors[page_button_inline] = {
+        kazusaclubU.colors[page_button_inline] = {
             Color = "inline"
         }
         --
@@ -2034,7 +2030,7 @@ do
             Color = theme.darkcontrast
         });page["page_button_color"] = page_button_color
         --
-        library.colors[page_button_color] = {
+        kazusaclubU.colors[page_button_color] = {
             Color = "darkcontrast"
         }
         --
@@ -2048,7 +2044,7 @@ do
             Position = utility:Position(0.5, 0, 0, 2, page_button_color)
         });page["page_button_title"] = page_button_title
         --
-        library.colors[page_button_title] = {
+        kazusaclubU.colors[page_button_title] = {
             OutlineColor = "textborder",
             Color = "textdark"
         }
@@ -2092,11 +2088,11 @@ do
                 window.currentPage.page_button_title.Color = theme.textdark
                 window.currentPage.open = false
                 --
-                library.colors[window.currentPage.page_button_color] = {
+                kazusaclubU.colors[window.currentPage.page_button_color] = {
                     Color = "darkcontrast"
                 }
                 --
-                library.colors[window.currentPage.page_button_title] = {
+                kazusaclubU.colors[window.currentPage.page_button_title] = {
                     OutlineColor = "textborder",
                     Color = "textdark"
                 }
@@ -2116,11 +2112,11 @@ do
             page_button_title.Color = theme.textcolor
             page.open = true
             --
-            library.colors[page_button_color] = {
+            kazusaclubU.colors[page_button_color] = {
                 Color = "lightcontrast"
             }
             --
-            library.colors[page_button_title] = {
+            kazusaclubU.colors[page_button_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -2135,7 +2131,7 @@ do
             window:Move(window.main_frame.Position)
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and utility:MouseOverDrawing({page_button.Position.X,page_button.Position.Y,page_button.Position.X + page_button.Size.X,page_button.Position.Y + page_button.Size.Y}) and window.currentPage ~= page then
                 page:Show()
             end
@@ -2162,7 +2158,7 @@ do
             Visible = page.open
         }, section.visibleContent);section["section_inline"] = section_inline
         --
-        library.colors[section_inline] = {
+        kazusaclubU.colors[section_inline] = {
             Color = "inline"
         }
         --
@@ -2173,7 +2169,7 @@ do
             Visible = page.open
         }, section.visibleContent);section["section_outline"] = section_outline
         --
-        library.colors[section_outline] = {
+        kazusaclubU.colors[section_outline] = {
             Color = "outline"
         }
         --
@@ -2184,7 +2180,7 @@ do
             Visible = page.open
         }, section.visibleContent);section["section_frame"] = section_frame
         --
-        library.colors[section_frame] = {
+        kazusaclubU.colors[section_frame] = {
             Color = "darkcontrast"
         }
         --
@@ -2195,7 +2191,7 @@ do
             Visible = page.open
         }, section.visibleContent);section["section_accent"] = section_accent
         --
-        library.colors[section_accent] = {
+        kazusaclubU.colors[section_accent] = {
             Color = "accent"
         }
         --
@@ -2209,7 +2205,7 @@ do
             Visible = page.open
         }, section.visibleContent);section["section_title"] = section_title
         --
-        library.colors[section_title] = {
+        kazusaclubU.colors[section_title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -2245,7 +2241,7 @@ do
             Visible = page.open
         }, multiSection.visibleContent);multiSection["section_inline"] = multiSection_inline
         --
-        library.colors[multiSection_inline] = {
+        kazusaclubU.colors[multiSection_inline] = {
             Color = "inline"
         }
         --
@@ -2256,7 +2252,7 @@ do
             Visible = page.open
         }, multiSection.visibleContent);multiSection["section_outline"] = multiSection_outline
         --
-        library.colors[multiSection_outline] = {
+        kazusaclubU.colors[multiSection_outline] = {
             Color = "outline"
         }
         --
@@ -2267,7 +2263,7 @@ do
             Visible = page.open
         }, multiSection.visibleContent);multiSection["section_frame"] = multiSection_frame
         --
-        library.colors[multiSection_frame] = {
+        kazusaclubU.colors[multiSection_frame] = {
             Color = "darkcontrast"
         }
         --
@@ -2278,7 +2274,7 @@ do
             Visible = page.open
         }, multiSection.visibleContent)
         --
-        library.colors[multiSection_backFrame] = {
+        kazusaclubU.colors[multiSection_backFrame] = {
             Color = "lightcontrast"
         }
         --
@@ -2289,7 +2285,7 @@ do
             Visible = page.open
         }, multiSection.visibleContent)
         --
-        library.colors[multiSection_bottomFrame] = {
+        kazusaclubU.colors[multiSection_bottomFrame] = {
             Color = "outline"
         }
         --
@@ -2300,7 +2296,7 @@ do
             Visible = page.open
         }, multiSection.visibleContent);multiSection["section_accent"] = multiSection_accent
         --
-        library.colors[multiSection_accent] = {
+        kazusaclubU.colors[multiSection_accent] = {
             Color = "accent"
         }
         --
@@ -2326,7 +2322,7 @@ do
                 Visible = page.open
             }, multiSection.visibleContent);msection["msection_frame"] = msection_frame
             --
-            library.colors[msection_frame] = {
+            kazusaclubU.colors[msection_frame] = {
                 Color = i == 1 and "darkcontrast" or "lightcontrast"
             }
             --
@@ -2337,7 +2333,7 @@ do
                 Visible = page.open
             }, multiSection.visibleContent)
             --
-            library.colors[msection_line] = {
+            kazusaclubU.colors[msection_line] = {
                 Color = "outline"
             }
             --
@@ -2352,7 +2348,7 @@ do
                 Visible = page.open
             }, multiSection.visibleContent)
             --
-            library.colors[msection_title] = {
+            kazusaclubU.colors[msection_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -2364,7 +2360,7 @@ do
                 Visible = page.open
             }, multiSection.visibleContent);msection["msection_bottomline"] = msection_bottomline
             --
-            library.colors[msection_bottomline] = {
+            kazusaclubU.colors[msection_bottomline] = {
                 Color = i == 1 and "darkcontrast" or "outline"
             }
             --
@@ -2378,16 +2374,16 @@ do
                 end
             end
             --
-            library.began[#library.began + 1] = function(Input)
+            kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and page.open and  utility:MouseOverDrawing({msection_frame.Position.X,msection_frame.Position.Y,msection_frame.Position.X + msection_frame.Size.X,msection_frame.Position.Y + msection_frame.Size.Y}) and multiSection.currentSection ~= msection and not window:IsOverContent() then
                     multiSection.currentSection.msection_frame.Color = theme.lightcontrast
                     multiSection.currentSection.msection_bottomline.Color = theme.outline
                     --
-                    library.colors[multiSection.currentSection.msection_frame] = {
+                    kazusaclubU.colors[multiSection.currentSection.msection_frame] = {
                         Color = "lightcontrast"
                     }
                     --
-                    library.colors[multiSection.currentSection.msection_bottomline] = {
+                    kazusaclubU.colors[multiSection.currentSection.msection_bottomline] = {
                         Color = "outline"
                     }
                     --
@@ -2399,11 +2395,11 @@ do
                     msection_frame.Color = theme.darkcontrast
                     msection_bottomline.Color = theme.darkcontrast
                     --
-                    library.colors[msection_frame] = {
+                    kazusaclubU.colors[msection_frame] = {
                         Color = "darkcontrast"
                     }
                     --
-                    library.colors[msection_bottomline] = {
+                    kazusaclubU.colors[msection_bottomline] = {
                         Color = "darkcontrast"
                     }
                     --
@@ -2451,7 +2447,7 @@ do
             Visible = page.open
         }, playerList.visibleContent);playerList["playerList_inline"] = playerList_inline
         --
-        library.colors[playerList_inline] = {
+        kazusaclubU.colors[playerList_inline] = {
             Color = "inline"
         }
         --
@@ -2462,7 +2458,7 @@ do
             Visible = page.open
         }, playerList.visibleContent);playerList["playerList_outline"] = playerList_outline
         --
-        library.colors[playerList_outline] = {
+        kazusaclubU.colors[playerList_outline] = {
             Color = "outline"
         }
         --
@@ -2473,7 +2469,7 @@ do
             Visible = page.open
         }, playerList.visibleContent);playerList["playerList_frame"] = playerList_frame
         --
-        library.colors[playerList_frame] = {
+        kazusaclubU.colors[playerList_frame] = {
             Color = "darkcontrast"
         }
         --
@@ -2484,7 +2480,7 @@ do
             Visible = page.open
         }, playerList.visibleContent);playerList["playerList_accent"] = playerList_accent
         --
-        library.colors[playerList_accent] = {
+        kazusaclubU.colors[playerList_accent] = {
             Color = "accent"
         }
         --
@@ -2498,7 +2494,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[playerList_title] = {
+        kazusaclubU.colors[playerList_title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -2510,7 +2506,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[list_outline] = {
+        kazusaclubU.colors[list_outline] = {
             Color = "outline"
         }
         --
@@ -2521,7 +2517,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[list_inline] = {
+        kazusaclubU.colors[list_inline] = {
             Color = "inline"
         }
         --
@@ -2532,7 +2528,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[list_frame] = {
+        kazusaclubU.colors[list_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -2543,7 +2539,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[list_scroll] = {
+        kazusaclubU.colors[list_scroll] = {
             Color = "darkcontrast"
         }
         --
@@ -2554,7 +2550,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[list_bar] = {
+        kazusaclubU.colors[list_bar] = {
             Color = "accent"
         }
         --
@@ -2580,7 +2576,7 @@ do
                     Visible = page.open
                 }, playerList.visibleContent)
                 --
-                library.colors[listitem_line] = {
+                kazusaclubU.colors[listitem_line] = {
                     Color = "outline"
                 }
             end
@@ -2593,7 +2589,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[listitem_firstline] = {
+            kazusaclubU.colors[listitem_firstline] = {
                 Color = "outline"
             }
             --
@@ -2605,7 +2601,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[listitem_secondline] = {
+            kazusaclubU.colors[listitem_secondline] = {
                 Color = "outline"
             }
             --
@@ -2619,7 +2615,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[listitem_username] = {
+            kazusaclubU.colors[listitem_username] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -2634,7 +2630,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[listitem_team] = {
+            kazusaclubU.colors[listitem_team] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -2649,7 +2645,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[listitem_status] = {
+            kazusaclubU.colors[listitem_status] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -2679,12 +2675,12 @@ do
                     listitem_username.Color = selected[4] and theme.accent or theme.textcolor
                     listitem_status.Color = selected[3] == "Local Player" and Color3.fromRGB(200, 55, 200) or selected[3] == "Priority" and Color3.fromRGB(55, 55, 200) or selected[3] == "Friend" and Color3.fromRGB(55, 200, 55) or selected[3] == "Enemy" and Color3.fromRGB(200, 55, 55) or theme.textcolor
                     --
-                    library.colors[listitem_username] = {
+                    kazusaclubU.colors[listitem_username] = {
                         OutlineColor = "textborder",
                         Color = selected[4] and "accent" or "textcolor"
                     }
                     -- 
-                    library.colors[listitem_status] = {
+                    kazusaclubU.colors[listitem_status] = {
                         OutlineColor = "textborder",
                         Color = selected[3] == "None" and "textcolor" or nil
                     }
@@ -2705,7 +2701,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[options_iconoutline] = {
+        kazusaclubU.colors[options_iconoutline] = {
             Color = "outline"
         }
         --
@@ -2716,7 +2712,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[options_iconinline] = {
+        kazusaclubU.colors[options_iconinline] = {
             Color = "inline"
         }
         --
@@ -2727,7 +2723,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[options_iconframe] = {
+        kazusaclubU.colors[options_iconframe] = {
             Color = "lightcontrast"
         }
         --
@@ -2749,7 +2745,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[options_loadingtext] = {
+        kazusaclubU.colors[options_loadingtext] = {
             OutlineColor = "textborder",
             Color = "textdark"
         }
@@ -2764,7 +2760,7 @@ do
             Visible = page.open
         }, playerList.visibleContent)
         --
-        library.colors[options_title] = {
+        kazusaclubU.colors[options_title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -2785,7 +2781,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[button_outline] = {
+            kazusaclubU.colors[button_outline] = {
                 Color = "outline"
             }
             --
@@ -2796,7 +2792,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[button_inline] = {
+            kazusaclubU.colors[button_inline] = {
                 Color = "inline"
             }
             --
@@ -2807,7 +2803,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[button_frame] = {
+            kazusaclubU.colors[button_frame] = {
                 Color = "lightcontrast"
             }
             --
@@ -2829,7 +2825,7 @@ do
                 Visible = page.open
             }, playerList.visibleContent)
             --
-            library.colors[button_title] = {
+            kazusaclubU.colors[button_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -2880,7 +2876,7 @@ do
                         v[1].Text = value
                         v[1].Color = value == tostring(button.current) and theme.accent or theme.textcolor
                         v[1].Position = utility:Position(0, value == tostring(button.current) and 8 or 6, 0, 2, v[2])
-                        library.colors[v[1]] = {
+                        kazusaclubU.colors[v[1]] = {
                             Color = v[1].Text == tostring(button.current) and "accent" or "textcolor"
                         }
                         utility:UpdateOffset(v[1], {Vector2.new(v[1].Text == tostring(button.current) and 8 or 6, 2), v[2]})
@@ -2916,7 +2912,7 @@ do
                     Visible = page.open
                 }, button.holder.drawings);button.holder.outline = button_open_outline
                 --
-                library.colors[button_open_outline] = {
+                kazusaclubU.colors[button_open_outline] = {
                     Color = "outline"
                 }
                 --
@@ -2927,7 +2923,7 @@ do
                     Visible = page.open
                 }, button.holder.drawings);button.holder.inline = button_open_inline
                 --
-                library.colors[button_open_inline] = {
+                kazusaclubU.colors[button_open_inline] = {
                     Color = "inline"
                 }
                 --
@@ -2942,7 +2938,7 @@ do
                             Visible = page.open
                         }, button.holder.drawings)
                         --
-                        library.colors[button_value_frame] = {
+                        kazusaclubU.colors[button_value_frame] = {
                             Color = "lightcontrast"
                         }
                         --
@@ -2958,7 +2954,7 @@ do
                         --
                         button.holder.buttons[#button.holder.buttons + 1] = {button_value, button_value_frame}
                         --
-                        library.colors[button_value] = {
+                        kazusaclubU.colors[button_value] = {
                             OutlineColor = "textborder",
                             Color = Value == tostring(button.current) and "accent" or "textcolor"
                         }
@@ -2971,7 +2967,7 @@ do
             --
             utility:LoadImage(button_gradient, "gradient", images["gradient"])
             --
-            library.began[#library.began + 1] = function(Input)
+            kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 and (button_outline.Visible or button.open) and window.isVisible then
                     if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and button_outline.Visible then
                         if button.open and button.holder.inline and utility:MouseOverDrawing({button.holder.inline.Position.X, button.holder.inline.Position.Y, button.holder.inline.Position.X + button.holder.inline.Size.X, button.holder.inline.Position.Y + button.holder.inline.Size.Y}) then
@@ -3060,7 +3056,7 @@ do
             end
             --
             if Relation then
-                library.Relations[Relation[1].UserId] = Relation[3] ~= "None" and Relation[3] or nil
+                kazusaclubU.Relations[Relation[1].UserId] = Relation[3] ~= "None" and Relation[3] or nil
             end
             --
             playerList_title.Text = ("Player List - %s Players"):format(#playerList.items - 1)
@@ -3117,7 +3113,7 @@ do
             playerList.players[#playerList.players + 1] = {Value, Value.Name, Value == localplayer and "Local Player" or "None", false}
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and list_outline.Visible and window.isVisible then
                 if utility:MouseOverDrawing({list_bar.Position.X, list_bar.Position.Y, list_bar.Position.X + list_bar.Size.X, list_bar.Position.Y + list_bar.Size.Y}) then
                     playerList.scrolling = {true, (utility:MouseLocation().Y - list_bar.Position.Y)}
@@ -3147,13 +3143,13 @@ do
             end
         end
         --
-        library.ended[#library.ended + 1] = function(Input)
+        kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
             if playerList.scrolling[1] and Input.UserInputType == Enum.UserInputType.MouseButton1 then
                 playerList.scrolling = {false, nil}
             end
         end
         --
-        library.changed[#library.changed + 1] = function(Input)
+        kazusaclubU.changed[#kazusaclubU.changed + 1] = function(Input)
             if playerList.scrolling[1] then
                 local MouseLocation = utility:MouseLocation()
                 local Position = math.clamp((MouseLocation.Y - list_scroll.Position.Y - playerList.scrolling[2]), 0, ((list_scroll.Size.Y - list_bar.Size.Y)))
@@ -3208,13 +3204,13 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[label_title] = {
+        kazusaclubU.colors[label_title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = label
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = label
         end
         --
         section.currentAxis = section.currentAxis + label_title.TextBounds.Y + 4
@@ -3242,7 +3238,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[toggle_outline] = {
+        kazusaclubU.colors[toggle_outline] = {
             Color = "outline"
         }
         --
@@ -3253,7 +3249,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[toggle_inline] = {
+        kazusaclubU.colors[toggle_inline] = {
             Color = "inline"
         }
         --
@@ -3264,7 +3260,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[toggle_frame] = {
+        kazusaclubU.colors[toggle_frame] = {
             Color = toggle.current == true and "accent" or "lightcontrast"
         }
         --
@@ -3285,7 +3281,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[toggle_title] = {
+        kazusaclubU.colors[toggle_title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -3301,7 +3297,7 @@ do
                 toggle.current = bool
                 toggle_frame.Color = toggle.current == true and theme.accent or theme.lightcontrast
                 --
-                library.colors[toggle_frame] = {
+                kazusaclubU.colors[toggle_frame] = {
                     Color = toggle.current == true and "accent" or "lightcontrast"
                 }
                 --
@@ -3320,16 +3316,16 @@ do
             end
         end
         --
-        library.colors[toggle_frame] = {
+        kazusaclubU.colors[toggle_frame] = {
             Color = toggle.current == true and "accent" or "lightcontrast"
         }
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and toggle_outline.Visible and window.isVisible and page.open and utility:MouseOverDrawing({section.section_frame.Position.X, section.section_frame.Position.Y + toggle.axis, section.section_frame.Position.X + section.section_frame.Size.X - toggle.addedAxis, section.section_frame.Position.Y + toggle.axis + 15}) and not window:IsOverContent() then
                 toggle.current = not toggle.current
                 toggle_frame.Color = toggle.current == true and theme.accent or theme.lightcontrast
                 --
-                library.colors[toggle_frame] = {
+                kazusaclubU.colors[toggle_frame] = {
                     Color = toggle.current == true and "accent" or "lightcontrast"
                 }
                 --
@@ -3347,8 +3343,8 @@ do
             end
         end
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = toggle
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = toggle
         end
         --
         section.currentAxis = section.currentAxis + 15 + 4
@@ -3371,7 +3367,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[colorpicker_outline] = {
+            kazusaclubU.colors[colorpicker_outline] = {
                 Color = "outline"
             }
             --
@@ -3382,7 +3378,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[colorpicker_inline] = {
+            kazusaclubU.colors[colorpicker_inline] = {
                 Color = "inline"
             }
             --
@@ -3493,7 +3489,7 @@ do
                 return {Color = Color3.fromHSV(colorpicker.current[1], colorpicker.current[2], colorpicker.current[3]), Transparency = colorpicker.current[4]}
             end
             --
-            library.began[#library.began + 1] = function(Input)
+            kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and colorpicker_outline.Visible then
                     if colorpicker.open and colorpicker.holder.inline and utility:MouseOverDrawing({colorpicker.holder.inline.Position.X, colorpicker.holder.inline.Position.Y, colorpicker.holder.inline.Position.X + colorpicker.holder.inline.Size.X, colorpicker.holder.inline.Position.Y + colorpicker.holder.inline.Size.Y}) then
                         if colorpicker.holder.picker and utility:MouseOverDrawing({colorpicker.holder.picker.Position.X - 2, colorpicker.holder.picker.Position.Y - 2, colorpicker.holder.picker.Position.X - 2 + colorpicker.holder.picker.Size.X + 4, colorpicker.holder.picker.Position.Y - 2 + colorpicker.holder.picker.Size.Y + 4}) then
@@ -3517,7 +3513,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings);colorpicker.holder.inline = colorpicker_open_outline
                             --
-                            library.colors[colorpicker_open_outline] = {
+                            kazusaclubU.colors[colorpicker_open_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -3527,7 +3523,7 @@ do
                                 Color = theme.inline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_inline] = {
+                            kazusaclubU.colors[colorpicker_open_inline] = {
                                 Color = "inline"
                             }
                             --
@@ -3537,7 +3533,7 @@ do
                                 Color = theme.darkcontrast
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_frame] = {
+                            kazusaclubU.colors[colorpicker_open_frame] = {
                                 Color = "darkcontrast"
                             }
                             --
@@ -3547,7 +3543,7 @@ do
                                 Color = theme.accent
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_accent] = {
+                            kazusaclubU.colors[colorpicker_open_accent] = {
                                 Color = "accent"
                             }
                             --
@@ -3560,7 +3556,7 @@ do
                                 Position = utility:Position(0, 4, 0, 2, colorpicker_open_frame),
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_title] = {
+                            kazusaclubU.colors[colorpicker_title] = {
                                 OutlineColor = "textborder",
                                 Color = "textcolor"
                             }
@@ -3571,7 +3567,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_picker_outline] = {
+                            kazusaclubU.colors[colorpicker_open_picker_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -3581,7 +3577,7 @@ do
                                 Color = theme.inline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_picker_inline] = {
+                            kazusaclubU.colors[colorpicker_open_picker_inline] = {
                                 Color = "inline"
                             }
                             --
@@ -3607,7 +3603,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_huepicker_outline] = {
+                            kazusaclubU.colors[colorpicker_open_huepicker_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -3617,7 +3613,7 @@ do
                                 Color = theme.inline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_huepicker_inline] = {
+                            kazusaclubU.colors[colorpicker_open_huepicker_inline] = {
                                 Color = "inline"
                             }
                             --
@@ -3632,7 +3628,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings);colorpicker.holder.huepicker_cursor[1] = colorpicker_open_huepicker_cursor_outline
                             --
-                            library.colors[colorpicker_open_huepicker_cursor_outline] = {
+                            kazusaclubU.colors[colorpicker_open_huepicker_cursor_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -3642,7 +3638,7 @@ do
                                 Color = theme.textcolor
                             }, colorpicker.holder.drawings);colorpicker.holder.huepicker_cursor[2] = colorpicker_open_huepicker_cursor_inline
                             --
-                            library.colors[colorpicker_open_huepicker_cursor_inline] = {
+                            kazusaclubU.colors[colorpicker_open_huepicker_cursor_inline] = {
                                 Color = "textcolor"
                             }
                             --
@@ -3659,7 +3655,7 @@ do
                                     Color = theme.outline
                                 }, colorpicker.holder.drawings)
                                 --
-                                library.colors[colorpicker_open_transparency_outline] = {
+                                kazusaclubU.colors[colorpicker_open_transparency_outline] = {
                                     Color = "outline"
                                 }
                                 --
@@ -3669,7 +3665,7 @@ do
                                     Color = theme.inline
                                 }, colorpicker.holder.drawings)
                                 --
-                                library.colors[colorpicker_open_transparency_inline] = {
+                                kazusaclubU.colors[colorpicker_open_transparency_inline] = {
                                     Color = "inline"
                                 }
                                 --
@@ -3690,7 +3686,7 @@ do
                                     Color = theme.outline
                                 }, colorpicker.holder.drawings);colorpicker.holder.transparency_cursor[1] = colorpicker_open_transparency_cursor_outline
                                 --
-                                library.colors[colorpicker_open_transparency_cursor_outline] = {
+                                kazusaclubU.colors[colorpicker_open_transparency_cursor_outline] = {
                                     Color = "outline"
                                 }
                                 --
@@ -3700,7 +3696,7 @@ do
                                     Color = theme.textcolor
                                 }, colorpicker.holder.drawings);colorpicker.holder.transparency_cursor[2] = colorpicker_open_transparency_cursor_inline
                                 --
-                                library.colors[colorpicker_open_transparency_cursor_inline] = {
+                                kazusaclubU.colors[colorpicker_open_transparency_cursor_inline] = {
                                     Color = "textcolor"
                                 }
                                 --
@@ -3761,7 +3757,7 @@ do
                 end
             end
             --
-            library.ended[#library.ended + 1] = function(Input)
+            kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 then
                     if colorpicker.holding.picker then
                         colorpicker.holding.picker = not colorpicker.holding.picker
@@ -3775,7 +3771,7 @@ do
                 end
             end
             --
-            library.changed[#library.changed + 1] = function()
+            kazusaclubU.changed[#kazusaclubU.changed + 1] = function()
                 if colorpicker.open and colorpicker.holding.picker or colorpicker.holding.huepicker or colorpicker.holding.transparency then
                     if window.isVisible then
                         colorpicker:Refresh()
@@ -3793,8 +3789,8 @@ do
                 end
             end
             --
-            if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-                library.pointers[tostring(pointer)] = colorpicker
+            if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+                kazusaclubU.pointers[tostring(pointer)] = colorpicker
             end
             --
             toggle.addedAxis = toggle.addedAxis + 30 + 4 + 2
@@ -3828,7 +3824,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[keybind_outline] = {
+            kazusaclubU.colors[keybind_outline] = {
                 Color = "outline"
             }
             --
@@ -3839,7 +3835,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[keybind_inline] = {
+            kazusaclubU.colors[keybind_inline] = {
                 Color = "inline"
             }
             --
@@ -3850,7 +3846,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[keybind_frame] = {
+            kazusaclubU.colors[keybind_frame] = {
                 Color = "lightcontrast"
             }
             --
@@ -3872,7 +3868,7 @@ do
                 Visible = page.open
             }, section.visibleContent);keybind["keybind_value"] = keybind_value
             --
-            library.colors[keybind_value] = {
+            kazusaclubU.colors[keybind_value] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -3938,7 +3934,7 @@ do
                 for i,v in pairs(keybind.modemenu.buttons) do
                     v.Color = v.Text == keybind.mode and theme.accent or theme.textcolor
                     --
-                    library.colors[v] = {
+                    kazusaclubU.colors[v] = {
                         Color = v.Text == keybind.mode and "accent" or "textcolor"
                     }
                 end
@@ -3964,7 +3960,7 @@ do
             --
             keybind:Change(def)
             --
-            library.began[#library.began + 1] = function(Input)
+            kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
                 if keybind.current[1] and keybind.current[2] then
                     if Input.KeyCode == Enum[keybind.current[1]][keybind.current[2]] or Input.UserInputType == Enum[keybind.current[1]][keybind.current[2]] then
                         if keybind.mode == "On Hold" then
@@ -3993,7 +3989,7 @@ do
                         keybind.active = (keybind.mode == "Always" or keybind.mode == "Off Hold") and true or false
                         keybind_frame.Color = theme.lightcontrast
                         --
-                        library.colors[keybind_frame] = {
+                        kazusaclubU.colors[keybind_frame] = {
                             Color = "lightcontrast"
                         }
                         --
@@ -4007,7 +4003,7 @@ do
                     keybind.selecting = false
                     keybind_frame.Color = theme.lightcontrast
                     --
-                    library.colors[keybind_frame] = {
+                    kazusaclubU.colors[keybind_frame] = {
                         Color = "lightcontrast"
                     }
                 end
@@ -4017,7 +4013,7 @@ do
                         keybind.selecting = true
                         keybind_frame.Color = theme.darkcontrast
                         --
-                        library.colors[keybind_frame] = {
+                        kazusaclubU.colors[keybind_frame] = {
                             Color = "darkcontrast"
                         }
                     end
@@ -4062,7 +4058,7 @@ do
                             Visible = page.open
                         }, keybind.modemenu.drawings);keybind.modemenu.frame = modemenu
                         --
-                        library.colors[modemenu] = {
+                        kazusaclubU.colors[modemenu] = {
                             Color = "outline"
                         }
                         --
@@ -4073,7 +4069,7 @@ do
                             Visible = page.open
                         }, keybind.modemenu.drawings)
                         --
-                        library.colors[modemenu_inline] = {
+                        kazusaclubU.colors[modemenu_inline] = {
                             Color = "inline"
                         }
                         --
@@ -4084,7 +4080,7 @@ do
                             Visible = page.open
                         }, keybind.modemenu.drawings)
                         --
-                        library.colors[modemenu_frame] = {
+                        kazusaclubU.colors[modemenu_frame] = {
                             Color = "lightcontrast"
                         }
                         --
@@ -4109,7 +4105,7 @@ do
                                 Visible = page.open
                             }, keybind.modemenu.drawings);keybind.modemenu.buttons[#keybind.modemenu.buttons + 1] = button_title
                             --
-                            library.colors[button_title] = {
+                            kazusaclubU.colors[button_title] = {
                                 OutlineColor = "textborder",
                                 Color = v == keybind.mode and "accent" or "textcolor"
                             }
@@ -4121,7 +4117,7 @@ do
                 end
             end
             --
-            library.ended[#library.ended + 1] = function(Input)
+            kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
                 if keybind.mode == "On Hold" or keybind.mode == "Off Hold" then
                     if keybind.current[1] and keybind.current[2] then
                         if Input.KeyCode == Enum[keybind.current[1]][keybind.current[2]] or Input.UserInputType == Enum[keybind.current[1]][keybind.current[2]] then
@@ -4139,8 +4135,8 @@ do
                 end
             end
             --
-            if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-                library.pointers[tostring(pointer)] = keybind
+            if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+                kazusaclubU.pointers[tostring(pointer)] = keybind
             end
             --
             toggle.addedAxis = 40+4+2
@@ -4183,7 +4179,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[slider_title] = {
+            kazusaclubU.colors[slider_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -4196,7 +4192,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[slider_outline] = {
+        kazusaclubU.colors[slider_outline] = {
             Color = "outline"
         }
         --
@@ -4207,7 +4203,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[slider_inline] = {
+        kazusaclubU.colors[slider_inline] = {
             Color = "inline"
         }
         --
@@ -4218,7 +4214,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[slider_frame] = {
+        kazusaclubU.colors[slider_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -4229,7 +4225,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[slider_slide] = {
+        kazusaclubU.colors[slider_slide] = {
             Color = "accent"
         }
         --
@@ -4252,7 +4248,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[slider_value] = {
+        kazusaclubU.colors[slider_value] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -4288,27 +4284,27 @@ do
         --
         slider:Set(def)
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and slider_outline.Visible and window.isVisible and page.open and utility:MouseOverDrawing({section.section_frame.Position.X, section.section_frame.Position.Y + slider.axis, section.section_frame.Position.X + section.section_frame.Size.X, section.section_frame.Position.Y + slider.axis + (name and 29 or 14)}) and not window:IsOverContent() then
                 slider.holding = true
                 slider:Refresh()
             end
         end
         --
-        library.ended[#library.ended + 1] = function(Input)
+        kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and slider.holding and window.isVisible then
                 slider.holding = false
             end
         end
         --
-        library.changed[#library.changed + 1] = function(Input)
+        kazusaclubU.changed[#kazusaclubU.changed + 1] = function(Input)
             if slider.holding and window.isVisible then
                 slider:Refresh()
             end
         end
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = slider
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = slider
         end
         --
         section.currentAxis = section.currentAxis + (name and 29 or 14) + 4
@@ -4335,7 +4331,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[button_outline] = {
+        kazusaclubU.colors[button_outline] = {
             Color = "outline"
         }
         --
@@ -4346,7 +4342,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[button_inline] = {
+        kazusaclubU.colors[button_inline] = {
             Color = "inline"
         }
         --
@@ -4357,7 +4353,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[button_frame] = {
+        kazusaclubU.colors[button_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -4379,14 +4375,14 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[button_title] = {
+        kazusaclubU.colors[button_title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
         --
         utility:LoadImage(button_gradient, "gradient", images["gradient"])
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and button_outline.Visible and window.isVisible and utility:MouseOverDrawing({section.section_frame.Position.X, section.section_frame.Position.Y + button.axis, section.section_frame.Position.X + section.section_frame.Size.X, section.section_frame.Position.Y + button.axis + 20}) and not window:IsOverContent() then
                 task.spawn(function()
                     utility:LoadImage(button_gradient, "gradientdown", images["gradientdown"]) 
@@ -4400,8 +4396,8 @@ do
             end
         end
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = button
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = button
         end
         --
         section.currentAxis = section.currentAxis + 20 + 4
@@ -4432,7 +4428,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[textbox_outline] = {
+        kazusaclubU.colors[textbox_outline] = {
             Color = "outline"
         }
         --
@@ -4443,7 +4439,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[textbox_inline] = {
+        kazusaclubU.colors[textbox_inline] = {
             Color = "inline"
         }
         --
@@ -4454,7 +4450,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[textbox_inneroutline] = {
+        kazusaclubU.colors[textbox_inneroutline] = {
             Color = "outline"
         }
         --
@@ -4465,7 +4461,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[textbox_frame] = {
+        kazusaclubU.colors[textbox_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -4487,7 +4483,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[textbox_value] = {
+        kazusaclubU.colors[textbox_value] = {
             OutlineColor = "textborder",
             Color = textbox.current == "" and (placeholder and "textdark") or "textcolor"
         }
@@ -4505,7 +4501,7 @@ do
             textbox_value.Text = (textbox.current == "" and placeholder or textbox.current) ~= newtext and (newtext .. "...") or newtext
             textbox_value.Color = textbox.current == "" and (placeholder and theme.textdark) or theme.textcolor
             --
-            library.colors[textbox_value] = {
+            kazusaclubU.colors[textbox_value] = {
                 OutlineColor = "textborder",
                 Color = textbox.current == "" and (placeholder and "textdark") or "textcolor"
             }
@@ -4517,7 +4513,7 @@ do
         --
         textbox:Set(textbox.current, true)
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and textbox_outline.Visible and window.isVisible then
                 if reactive and utility:MouseOverDrawing({section.section_frame.Position.X, section.section_frame.Position.Y + textbox.axis, section.section_frame.Position.X + section.section_frame.Size.X, section.section_frame.Position.Y + textbox.axis + 20}) and not window:IsOverContent() then
                     task.spawn(function()
@@ -4533,7 +4529,7 @@ do
                         --
                         textbox_value.Color = theme.accent
                         --
-                        library.colors[textbox_value] = {
+                        kazusaclubU.colors[textbox_value] = {
                             OutlineColor = "textborder",
                             Color = "accent"
                         }
@@ -4555,7 +4551,7 @@ do
                                 --
                                 textbox_value.Color = textbox.current == "" and (placeholder and theme.textdark) or theme.textcolor
                                 --
-                                library.colors[textbox_value] = {
+                                kazusaclubU.colors[textbox_value] = {
                                     OutlineColor = "textborder",
                                     Color = textbox.current == "" and (placeholder and "textdark") or "textcolor"
                                 }
@@ -4576,7 +4572,7 @@ do
                     task.spawn(function()
                         textbox_value.Color = theme.accent
                         --
-                        library.colors[textbox_value] = {
+                        kazusaclubU.colors[textbox_value] = {
                             OutlineColor = "textborder",
                             Color = "accent"
                         }
@@ -4587,7 +4583,7 @@ do
                         --
                         textbox_value.Color = textbox.current == "" and (placeholder and theme.textdark) or theme.textcolor
                         --
-                        library.colors[textbox_value] = {
+                        kazusaclubU.colors[textbox_value] = {
                             OutlineColor = "textborder",
                             Color = textbox.current == "" and (placeholder and "textdark") or "textcolor"
                         }
@@ -4604,8 +4600,8 @@ do
             end
         end
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = textbox
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = textbox
         end
         --
         section.currentAxis = section.currentAxis + 20 + 4
@@ -4633,7 +4629,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[button_outline] = {
+            kazusaclubU.colors[button_outline] = {
                 Color = "outline"
             }
             --
@@ -4644,7 +4640,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[button_inline] = {
+            kazusaclubU.colors[button_inline] = {
                 Color = "inline"
             }
             --
@@ -4655,7 +4651,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[button_frame] = {
+            kazusaclubU.colors[button_frame] = {
                 Color = "lightcontrast"
             }
             --
@@ -4677,14 +4673,14 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[button_title] = {
+            kazusaclubU.colors[button_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
             --
             utility:LoadImage(button_gradient, "gradient", images["gradient"])
             --
-            library.began[#library.began + 1] = function(Input)
+            kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 and button_outline.Visible and window.isVisible and utility:MouseOverDrawing({section.section_frame.Position.X + (i == 2 and (section.section_frame.Size.X/2) or 0), section.section_frame.Position.Y + button.axis, section.section_frame.Position.X + section.section_frame.Size.X - (i == 1 and (section.section_frame.Size.X/2) or 0), section.section_frame.Position.Y + button.axis + 20}) and not window:IsOverContent() then
                     task.spawn(function()
                         utility:LoadImage(button_gradient, "gradientdown", images["gradientdown"]) 
@@ -4724,7 +4720,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[dropdown_outline] = {
+        kazusaclubU.colors[dropdown_outline] = {
             Color = "outline"
         }
         --
@@ -4735,7 +4731,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[dropdown_inline] = {
+        kazusaclubU.colors[dropdown_inline] = {
             Color = "inline"
         }
         --
@@ -4746,7 +4742,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[dropdown_frame] = {
+        kazusaclubU.colors[dropdown_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -4761,7 +4757,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[dropdown_title] = {
+            kazusaclubU.colors[dropdown_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -4784,7 +4780,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[dropdown_value] = {
+        kazusaclubU.colors[dropdown_value] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -4831,7 +4827,7 @@ do
                     v[1].Text = value
                     v[1].Color = value == tostring(dropdown.current) and theme.accent or theme.textcolor
                     v[1].Position = utility:Position(0, value == tostring(dropdown.current) and 8 or 6, 0, 2, v[2])
-                    library.colors[v[1]] = {
+                    kazusaclubU.colors[v[1]] = {
                         Color = v[1].Text == tostring(dropdown.current) and "accent" or "textcolor"
                     }
                     utility:UpdateOffset(v[1], {Vector2.new(v[1].Text == tostring(dropdown.current) and 8 or 6, 2), v[2]})
@@ -4851,7 +4847,7 @@ do
             return dropdown.current
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and dropdown_outline.Visible then
                 if dropdown.open and dropdown.holder.inline and utility:MouseOverDrawing({dropdown.holder.inline.Position.X, dropdown.holder.inline.Position.Y, dropdown.holder.inline.Position.X + dropdown.holder.inline.Size.X, dropdown.holder.inline.Position.Y + dropdown.holder.inline.Size.Y}) then
                     if max and dropdown.bar and utility:MouseOverDrawing({dropdown.bar.Position.X - 1, dropdown.bar.Position.Y - 1, dropdown.bar.Position.X - 1 + dropdown.bar.Size.X + 2, dropdown.bar.Position.Y - 1 + dropdown.bar.Size.Y + 2}) then
@@ -4889,7 +4885,7 @@ do
                             Visible = page.open
                         }, dropdown.holder.drawings);dropdown.holder.outline = dropdown_open_outline
                         --
-                        library.colors[dropdown_open_outline] = {
+                        kazusaclubU.colors[dropdown_open_outline] = {
                             Color = "outline"
                         }
                         --
@@ -4900,7 +4896,7 @@ do
                             Visible = page.open
                         }, dropdown.holder.drawings);dropdown.holder.inline = dropdown_open_inline
                         --
-                        library.colors[dropdown_open_inline] = {
+                        kazusaclubU.colors[dropdown_open_inline] = {
                             Color = "inline"
                         }
                         --
@@ -4912,7 +4908,7 @@ do
                                 Visible = page.open
                             }, dropdown.holder.drawings);dropdown.scroll = dropdown_open_scroll
                             --
-                            library.colors[dropdown_open_scroll] = {
+                            kazusaclubU.colors[dropdown_open_scroll] = {
                                 Color = "darkcontrast"
                             }
                             --
@@ -4923,7 +4919,7 @@ do
                                 Visible = page.open
                             }, dropdown.holder.drawings);dropdown.bar = dropdown_open_bar
                             --
-                            library.colors[dropdown_open_bar] = {
+                            kazusaclubU.colors[dropdown_open_bar] = {
                                 Color = "accent"
                             }
                         end
@@ -4939,7 +4935,7 @@ do
                                     Visible = page.open
                                 }, dropdown.holder.drawings)
                                 --
-                                library.colors[dropdown_value_frame] = {
+                                kazusaclubU.colors[dropdown_value_frame] = {
                                     Color = "lightcontrast"
                                 }
                                 --
@@ -4955,7 +4951,7 @@ do
                                 --
                                 dropdown.holder.buttons[#dropdown.holder.buttons + 1] = {dropdown_value, dropdown_value_frame}
                                 --
-                                library.colors[dropdown_value] = {
+                                kazusaclubU.colors[dropdown_value] = {
                                     OutlineColor = "textborder",
                                     Color = Value == tostring(dropdown.current) and "accent" or "textcolor"
                                 }
@@ -5014,13 +5010,13 @@ do
         end
         --
         if max then
-            library.ended[#library.ended + 1] = function(Input)
+            kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
                 if dropdown.scrolling and dropdown.scrolling[1] and Input.UserInputType == Enum.UserInputType.MouseButton1 then
                     dropdown.scrolling = {false, nil}
                 end
             end
             --
-            library.changed[#library.changed + 1] = function(Input)
+            kazusaclubU.changed[#kazusaclubU.changed + 1] = function(Input)
                 if dropdown.scrolling and dropdown.scrolling[1] then
                     local MouseLocation = utility:MouseLocation()
                     local Position = math.clamp((MouseLocation.Y - dropdown.scroll.Position.Y - dropdown.scrolling[2]), 0, ((dropdown.scroll.Size.Y - dropdown.bar.Size.Y)))
@@ -5045,8 +5041,8 @@ do
             end)
         end
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = dropdown
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = dropdown
         end
         --
         section.currentAxis = section.currentAxis + (name and 35 or 20) + 4
@@ -5076,7 +5072,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[multibox_outline] = {
+        kazusaclubU.colors[multibox_outline] = {
             Color = "outline"
         }
         --
@@ -5087,7 +5083,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[multibox_inline] = {
+        kazusaclubU.colors[multibox_inline] = {
             Color = "inline"
         }
         --
@@ -5098,7 +5094,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[multibox_frame] = {
+        kazusaclubU.colors[multibox_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -5113,7 +5109,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[multibox_title] = {
+            kazusaclubU.colors[multibox_title] = {
                 OutlineColor = "textborder",
                 Color = "textcolor"
             }
@@ -5136,7 +5132,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[multibox_value] = {
+        kazusaclubU.colors[multibox_value] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -5156,7 +5152,7 @@ do
                     v[1].Color = Find(multibox.current, v[1].Text) and theme.accent or theme.textcolor
                     v[1].Position = utility:Position(0, Find(multibox.current, v[1].Text) and 8 or 6, 0, 2, v[2])
                     --
-                    library.colors[v[1]] = {
+                    kazusaclubU.colors[v[1]] = {
                         Color = Find(multibox.current, v[1].Text) and "accent" or "textcolor"
                     }
                     --
@@ -5202,7 +5198,7 @@ do
         --
         multibox_value.Text = utility:WrapText(multibox:Serialize(multibox:Resort(multibox.current, multibox.options)), multibox_frame.Size.X - 25)
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and multibox_outline.Visible then
                 if multibox.open and multibox.holder.inline and utility:MouseOverDrawing({multibox.holder.inline.Position.X, multibox.holder.inline.Position.Y, multibox.holder.inline.Position.X + multibox.holder.inline.Size.X, multibox.holder.inline.Position.Y + multibox.holder.inline.Size.Y}) then
                     for i,v in pairs(multibox.holder.buttons) do
@@ -5241,7 +5237,7 @@ do
                             Visible = page.open
                         }, multibox.holder.drawings);multibox.holder.outline = multibox_open_outline
                         --
-                        library.colors[multibox_open_outline] = {
+                        kazusaclubU.colors[multibox_open_outline] = {
                             Color = "outline"
                         }
                         --
@@ -5252,7 +5248,7 @@ do
                             Visible = page.open
                         }, multibox.holder.drawings);multibox.holder.inline = multibox_open_inline
                         --
-                        library.colors[multibox_open_inline] = {
+                        kazusaclubU.colors[multibox_open_inline] = {
                             Color = "inline"
                         }
                         --
@@ -5264,7 +5260,7 @@ do
                                 Visible = page.open
                             }, multibox.holder.drawings)
                             --
-                            library.colors[multibox_value_frame] = {
+                            kazusaclubU.colors[multibox_value_frame] = {
                                 Color = "lightcontrast"
                             }
                             --[[
@@ -5287,7 +5283,7 @@ do
                                 Visible = page.open
                             }, multibox.holder.drawings);multibox.holder.buttons[#multibox.holder.buttons + 1] = {multibox_value, multibox_value_frame}
                             --
-                            library.colors[multibox_value] = {
+                            kazusaclubU.colors[multibox_value] = {
                                 OutlineColor = "textborder",
                                 Color = Find(multibox.current, v) and "accent" or "textcolor"
                             }
@@ -5344,8 +5340,8 @@ do
             end
         end
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = multibox
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = multibox
         end
         --
         section.currentAxis = section.currentAxis + (name and 35 or 20) + 4
@@ -5379,7 +5375,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[keybind_outline] = {
+        kazusaclubU.colors[keybind_outline] = {
             Color = "outline"
         }
         --
@@ -5390,7 +5386,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[keybind_inline] = {
+        kazusaclubU.colors[keybind_inline] = {
             Color = "inline"
         }
         --
@@ -5401,7 +5397,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[keybind_frame] = {
+        kazusaclubU.colors[keybind_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -5415,7 +5411,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[keybind_title] = {
+        kazusaclubU.colors[keybind_title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -5438,7 +5434,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[keybind_value] = {
+        kazusaclubU.colors[keybind_value] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -5505,7 +5501,7 @@ do
             for i,v in pairs(keybind.modemenu.buttons) do
                 v.Color = v.Text == keybind.mode and theme.accent or theme.textcolor
                 --
-                library.colors[v] = {
+                kazusaclubU.colors[v] = {
                     Color = v.Text == keybind.mode and "accent" or "textcolor"
                 }
             end
@@ -5525,7 +5521,7 @@ do
         --
         keybind:Change(def)
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if keybind.current[1] and keybind.current[2] then
                 if Input.KeyCode == Enum[keybind.current[1]][keybind.current[2]] or Input.UserInputType == Enum[keybind.current[1]][keybind.current[2]] then
                     if keybind.mode == "On Hold" then
@@ -5551,7 +5547,7 @@ do
                     keybind.active = keybind.mode == "Always" and true or false
                     keybind_frame.Color = theme.lightcontrast
                     --
-                    library.colors[keybind_frame] = {
+                    kazusaclubU.colors[keybind_frame] = {
                         Color = "lightcontrast"
                     }
                     --
@@ -5569,7 +5565,7 @@ do
                 keybind.selecting = false
                 keybind_frame.Color = theme.lightcontrast
                 --
-                library.colors[keybind_frame] = {
+                kazusaclubU.colors[keybind_frame] = {
                     Color = "lightcontrast"
                 }
             end
@@ -5579,7 +5575,7 @@ do
                     keybind.selecting = true
                     keybind_frame.Color = theme.darkcontrast
                     --
-                    library.colors[keybind_frame] = {
+                    kazusaclubU.colors[keybind_frame] = {
                         Color = "darkcontrast"
                     }
                 end
@@ -5624,7 +5620,7 @@ do
                         Visible = page.open
                     }, keybind.modemenu.drawings);keybind.modemenu.frame = modemenu
                     --
-                    library.colors[modemenu] = {
+                    kazusaclubU.colors[modemenu] = {
                         Color = "outline"
                     }
                     --
@@ -5635,7 +5631,7 @@ do
                         Visible = page.open
                     }, keybind.modemenu.drawings)
                     --
-                    library.colors[modemenu_inline] = {
+                    kazusaclubU.colors[modemenu_inline] = {
                         Color = "inline"
                     }
                     --
@@ -5646,7 +5642,7 @@ do
                         Visible = page.open
                     }, keybind.modemenu.drawings)
                     --
-                    library.colors[modemenu_frame] = {
+                    kazusaclubU.colors[modemenu_frame] = {
                         Color = "lightcontrast"
                     }
                     --
@@ -5671,7 +5667,7 @@ do
                             Visible = page.open
                         }, keybind.modemenu.drawings);keybind.modemenu.buttons[#keybind.modemenu.buttons + 1] = button_title
                         --
-                        library.colors[button_title] = {
+                        kazusaclubU.colors[button_title] = {
                             OutlineColor = "textborder",
                             Color = v == keybind.mode and "accent" or "textcolor"
                         }
@@ -5683,7 +5679,7 @@ do
             end
         end
         --
-        library.ended[#library.ended + 1] = function(Input)
+        kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
             if keybind.mode == "On Hold" or keybind.mode == "Off Hold" then
                 if keybind.current[1] and keybind.current[2] then
                     if Input.KeyCode == Enum[keybind.current[1]][keybind.current[2]] or Input.UserInputType == Enum[keybind.current[1]][keybind.current[2]] then
@@ -5703,8 +5699,8 @@ do
             end
         end
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = keybind
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = keybind
         end
         --
         section.currentAxis = section.currentAxis + 17 + 4
@@ -5735,7 +5731,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[colorpicker_outline] = {
+        kazusaclubU.colors[colorpicker_outline] = {
             Color = "outline"
         }
         --
@@ -5746,7 +5742,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[colorpicker_inline] = {
+        kazusaclubU.colors[colorpicker_inline] = {
             Color = "inline"
         }
         --
@@ -5784,7 +5780,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[colorpicker_title] = {
+        kazusaclubU.colors[colorpicker_title] = {
             OutlineColor = "textborder",
             Color = "textcolor"
         }
@@ -5864,7 +5860,7 @@ do
             return Color3.fromHSV(colorpicker.current[1], colorpicker.current[2], colorpicker.current[3])
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and colorpicker_outline.Visible then
                 if colorpicker.open and colorpicker.holder.inline and utility:MouseOverDrawing({colorpicker.holder.inline.Position.X, colorpicker.holder.inline.Position.Y, colorpicker.holder.inline.Position.X + colorpicker.holder.inline.Size.X, colorpicker.holder.inline.Position.Y + colorpicker.holder.inline.Size.Y}) then
                     if colorpicker.holder.picker and utility:MouseOverDrawing({colorpicker.holder.picker.Position.X - 2, colorpicker.holder.picker.Position.Y - 2, colorpicker.holder.picker.Position.X - 2 + colorpicker.holder.picker.Size.X + 4, colorpicker.holder.picker.Position.Y - 2 + colorpicker.holder.picker.Size.Y + 4}) then
@@ -5888,7 +5884,7 @@ do
                             Color = theme.outline
                         }, colorpicker.holder.drawings);colorpicker.holder.inline = colorpicker_open_outline
                         --
-                        library.colors[colorpicker_open_outline] = {
+                        kazusaclubU.colors[colorpicker_open_outline] = {
                             Color = "outline"
                         }
                         --
@@ -5898,7 +5894,7 @@ do
                             Color = theme.inline
                         }, colorpicker.holder.drawings)
                         --
-                        library.colors[colorpicker_open_inline] = {
+                        kazusaclubU.colors[colorpicker_open_inline] = {
                             Color = "inline"
                         }
                         --
@@ -5908,7 +5904,7 @@ do
                             Color = theme.darkcontrast
                         }, colorpicker.holder.drawings)
                         --
-                        library.colors[colorpicker_open_frame] = {
+                        kazusaclubU.colors[colorpicker_open_frame] = {
                             Color = "darkcontrast"
                         }
                         --
@@ -5918,7 +5914,7 @@ do
                             Color = theme.accent
                         }, colorpicker.holder.drawings)
                         --
-                        library.colors[colorpicker_open_accent] = {
+                        kazusaclubU.colors[colorpicker_open_accent] = {
                             Color = "accent"
                         }
                         --
@@ -5931,7 +5927,7 @@ do
                             Position = utility:Position(0, 4, 0, 2, colorpicker_open_frame),
                         }, colorpicker.holder.drawings)
                         --
-                        library.colors[colorpicker_title] = {
+                        kazusaclubU.colors[colorpicker_title] = {
                             OutlineColor = "textborder",
                             Color = "textcolor"
                         }
@@ -5942,7 +5938,7 @@ do
                             Color = theme.outline
                         }, colorpicker.holder.drawings)
                         --
-                        library.colors[colorpicker_open_picker_outline] = {
+                        kazusaclubU.colors[colorpicker_open_picker_outline] = {
                             Color = "outline"
                         }
                         --
@@ -5952,7 +5948,7 @@ do
                             Color = theme.inline
                         }, colorpicker.holder.drawings)
                         --
-                        library.colors[colorpicker_open_picker_inline] = {
+                        kazusaclubU.colors[colorpicker_open_picker_inline] = {
                             Color = "inline"
                         }
                         --
@@ -5978,7 +5974,7 @@ do
                             Color = theme.outline
                         }, colorpicker.holder.drawings)
                         --
-                        library.colors[colorpicker_open_huepicker_outline] = {
+                        kazusaclubU.colors[colorpicker_open_huepicker_outline] = {
                             Color = "outline"
                         }
                         --
@@ -5988,7 +5984,7 @@ do
                             Color = theme.inline
                         }, colorpicker.holder.drawings)
                         --
-                        library.colors[colorpicker_open_huepicker_inline] = {
+                        kazusaclubU.colors[colorpicker_open_huepicker_inline] = {
                             Color = "inline"
                         }
                         --
@@ -6003,7 +5999,7 @@ do
                             Color = theme.outline
                         }, colorpicker.holder.drawings);colorpicker.holder.huepicker_cursor[1] = colorpicker_open_huepicker_cursor_outline
                         --
-                        library.colors[colorpicker_open_huepicker_cursor_outline] = {
+                        kazusaclubU.colors[colorpicker_open_huepicker_cursor_outline] = {
                             Color = "outline"
                         }
                         --
@@ -6013,7 +6009,7 @@ do
                             Color = theme.textcolor
                         }, colorpicker.holder.drawings);colorpicker.holder.huepicker_cursor[2] = colorpicker_open_huepicker_cursor_inline
                         --
-                        library.colors[colorpicker_open_huepicker_cursor_inline] = {
+                        kazusaclubU.colors[colorpicker_open_huepicker_cursor_inline] = {
                             Color = "textcolor"
                         }
                         --
@@ -6030,7 +6026,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_transparency_outline] = {
+                            kazusaclubU.colors[colorpicker_open_transparency_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -6040,7 +6036,7 @@ do
                                 Color = theme.inline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_transparency_inline] = {
+                            kazusaclubU.colors[colorpicker_open_transparency_inline] = {
                                 Color = "inline"
                             }
                             --
@@ -6061,7 +6057,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings);colorpicker.holder.transparency_cursor[1] = colorpicker_open_transparency_cursor_outline
                             --
-                            library.colors[colorpicker_open_transparency_cursor_outline] = {
+                            kazusaclubU.colors[colorpicker_open_transparency_cursor_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -6071,7 +6067,7 @@ do
                                 Color = theme.textcolor
                             }, colorpicker.holder.drawings);colorpicker.holder.transparency_cursor[2] = colorpicker_open_transparency_cursor_inline
                             --
-                            library.colors[colorpicker_open_transparency_cursor_inline] = {
+                            kazusaclubU.colors[colorpicker_open_transparency_cursor_inline] = {
                                 Color = "textcolor"
                             }
                             --
@@ -6132,7 +6128,7 @@ do
             end
         end
         --
-        library.ended[#library.ended + 1] = function(Input)
+        kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 then
                 if colorpicker.holding.picker then
                     colorpicker.holding.picker = not colorpicker.holding.picker
@@ -6146,7 +6142,7 @@ do
             end
         end
         --
-        library.changed[#library.changed + 1] = function()
+        kazusaclubU.changed[#kazusaclubU.changed + 1] = function()
             if colorpicker.open and colorpicker.holding.picker or colorpicker.holding.huepicker or colorpicker.holding.transparency then
                 if window.isVisible then
                     colorpicker:Refresh()
@@ -6164,8 +6160,8 @@ do
             end
         end
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = colorpicker
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = colorpicker
         end
         --
         section.currentAxis = section.currentAxis + 15 + 4
@@ -6193,7 +6189,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[colorpicker_outline] = {
+            kazusaclubU.colors[colorpicker_outline] = {
                 Color = "outline"
             }
             --
@@ -6204,7 +6200,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[colorpicker_inline] = {
+            kazusaclubU.colors[colorpicker_inline] = {
                 Color = "inline"
             }
             --
@@ -6307,7 +6303,7 @@ do
                 return Color3.fromHSV(colorpicker.current[1], colorpicker.current[2], colorpicker.current[3])
             end
             --
-            library.began[#library.began + 1] = function(Input)
+            kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 and window.isVisible and colorpicker_outline.Visible then
                     if colorpicker.open and colorpicker.holder.inline and utility:MouseOverDrawing({colorpicker.holder.inline.Position.X, colorpicker.holder.inline.Position.Y, colorpicker.holder.inline.Position.X + colorpicker.holder.inline.Size.X, colorpicker.holder.inline.Position.Y + colorpicker.holder.inline.Size.Y}) then
                         if colorpicker.holder.picker and utility:MouseOverDrawing({colorpicker.holder.picker.Position.X - 2, colorpicker.holder.picker.Position.Y - 2, colorpicker.holder.picker.Position.X - 2 + colorpicker.holder.picker.Size.X + 4, colorpicker.holder.picker.Position.Y - 2 + colorpicker.holder.picker.Size.Y + 4}) then
@@ -6331,7 +6327,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings);colorpicker.holder.inline = colorpicker_open_outline
                             --
-                            library.colors[colorpicker_open_outline] = {
+                            kazusaclubU.colors[colorpicker_open_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -6341,7 +6337,7 @@ do
                                 Color = theme.inline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_inline] = {
+                            kazusaclubU.colors[colorpicker_open_inline] = {
                                 Color = "inline"
                             }
                             --
@@ -6351,7 +6347,7 @@ do
                                 Color = theme.darkcontrast
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_frame] = {
+                            kazusaclubU.colors[colorpicker_open_frame] = {
                                 Color = "darkcontrast"
                             }
                             --
@@ -6361,7 +6357,7 @@ do
                                 Color = theme.accent
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_accent] = {
+                            kazusaclubU.colors[colorpicker_open_accent] = {
                                 Color = "accent"
                             }
                             --
@@ -6374,7 +6370,7 @@ do
                                 Position = utility:Position(0, 4, 0, 2, colorpicker_open_frame),
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_title] = {
+                            kazusaclubU.colors[colorpicker_title] = {
                                 OutlineColor = "textborder",
                                 Color = "textcolor"
                             }
@@ -6385,7 +6381,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_picker_outline] = {
+                            kazusaclubU.colors[colorpicker_open_picker_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -6395,7 +6391,7 @@ do
                                 Color = theme.inline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_picker_inline] = {
+                            kazusaclubU.colors[colorpicker_open_picker_inline] = {
                                 Color = "inline"
                             }
                             --
@@ -6421,7 +6417,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_huepicker_outline] = {
+                            kazusaclubU.colors[colorpicker_open_huepicker_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -6431,7 +6427,7 @@ do
                                 Color = theme.inline
                             }, colorpicker.holder.drawings)
                             --
-                            library.colors[colorpicker_open_huepicker_inline] = {
+                            kazusaclubU.colors[colorpicker_open_huepicker_inline] = {
                                 Color = "inline"
                             }
                             --
@@ -6446,7 +6442,7 @@ do
                                 Color = theme.outline
                             }, colorpicker.holder.drawings);colorpicker.holder.huepicker_cursor[1] = colorpicker_open_huepicker_cursor_outline
                             --
-                            library.colors[colorpicker_open_huepicker_cursor_outline] = {
+                            kazusaclubU.colors[colorpicker_open_huepicker_cursor_outline] = {
                                 Color = "outline"
                             }
                             --
@@ -6456,7 +6452,7 @@ do
                                 Color = theme.textcolor
                             }, colorpicker.holder.drawings);colorpicker.holder.huepicker_cursor[2] = colorpicker_open_huepicker_cursor_inline
                             --
-                            library.colors[colorpicker_open_huepicker_cursor_inline] = {
+                            kazusaclubU.colors[colorpicker_open_huepicker_cursor_inline] = {
                                 Color = "textcolor"
                             }
                             --
@@ -6473,7 +6469,7 @@ do
                                     Color = theme.outline
                                 }, colorpicker.holder.drawings)
                                 --
-                                library.colors[colorpicker_open_transparency_outline] = {
+                                kazusaclubU.colors[colorpicker_open_transparency_outline] = {
                                     Color = "outline"
                                 }
                                 --
@@ -6483,7 +6479,7 @@ do
                                     Color = theme.inline
                                 }, colorpicker.holder.drawings)
                                 --
-                                library.colors[colorpicker_open_transparency_inline] = {
+                                kazusaclubU.colors[colorpicker_open_transparency_inline] = {
                                     Color = "inline"
                                 }
                                 --
@@ -6504,7 +6500,7 @@ do
                                     Color = theme.outline
                                 }, colorpicker.holder.drawings);colorpicker.holder.transparency_cursor[1] = colorpicker_open_transparency_cursor_outline
                                 --
-                                library.colors[colorpicker_open_transparency_cursor_outline] = {
+                                kazusaclubU.colors[colorpicker_open_transparency_cursor_outline] = {
                                     Color = "outline"
                                 }
                                 --
@@ -6514,7 +6510,7 @@ do
                                     Color = theme.textcolor
                                 }, colorpicker.holder.drawings);colorpicker.holder.transparency_cursor[2] = colorpicker_open_transparency_cursor_inline
                                 --
-                                library.colors[colorpicker_open_transparency_cursor_inline] = {
+                                kazusaclubU.colors[colorpicker_open_transparency_cursor_inline] = {
                                     Color = "textcolor"
                                 }
                                 --
@@ -6575,7 +6571,7 @@ do
                 end
             end
             --
-            library.ended[#library.ended + 1] = function(Input)
+            kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 then
                     if colorpicker.holding.picker then
                         colorpicker.holding.picker = not colorpicker.holding.picker
@@ -6589,7 +6585,7 @@ do
                 end
             end
             --
-            library.changed[#library.changed + 1] = function()
+            kazusaclubU.changed[#kazusaclubU.changed + 1] = function()
                 if colorpicker.open and colorpicker.holding.picker or colorpicker.holding.huepicker or colorpicker.holding.transparency then
                     if window.isVisible then
                         colorpicker:Refresh()
@@ -6607,8 +6603,8 @@ do
                 end
             end
             --
-            if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-                library.pointers[tostring(pointer)] = keybind
+            if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+                kazusaclubU.pointers[tostring(pointer)] = keybind
             end
             --
             return colorpicker
@@ -6637,7 +6633,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[list_outline] = {
+        kazusaclubU.colors[list_outline] = {
             Color = "outline"
         }
         --
@@ -6648,7 +6644,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[list_inline] = {
+        kazusaclubU.colors[list_inline] = {
             Color = "inline"
         }
         --
@@ -6659,7 +6655,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[list_frame] = {
+        kazusaclubU.colors[list_frame] = {
             Color = "lightcontrast"
         }
         --
@@ -6670,7 +6666,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[list_scroll] = {
+        kazusaclubU.colors[list_scroll] = {
             Color = "darkcontrast"
         }
         --
@@ -6681,7 +6677,7 @@ do
             Visible = page.open
         }, section.visibleContent)
         --
-        library.colors[list_bar] = {
+        kazusaclubU.colors[list_bar] = {
             Color = "accent"
         }
         --
@@ -6704,7 +6700,7 @@ do
                 Visible = page.open
             }, section.visibleContent)
             --
-            library.colors[config_title] = {
+            kazusaclubU.colors[config_title] = {
                 OutlineColor = "textborder",
                 Color = i == 1 and "accent" or "textcolor"
             }
@@ -6735,7 +6731,7 @@ do
                 Value.Text = list.options[Index + list.scrollingindex] or ""
                 Value.Color = (Index + list.scrollingindex) == list.current and theme.accent or theme.textcolor
                 --
-                library.colors[Value] = {
+                kazusaclubU.colors[Value] = {
                     OutlineColor = "textborder",
                     Color = (Index + list.scrollingindex) == list.current and "accent" or "textcolor"
                 }
@@ -6751,7 +6747,7 @@ do
             list:Refresh()
         end
         --
-        library.began[#library.began + 1] = function(Input)
+        kazusaclubU.began[#kazusaclubU.began + 1] = function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 and list_outline.Visible and window.isVisible then
                 if utility:MouseOverDrawing({list_bar.Position.X, list_bar.Position.Y, list_bar.Position.X + list_bar.Size.X, list_bar.Position.Y + list_bar.Size.Y}) then
                     list.scrolling = {true, (utility:MouseLocation().Y - list_bar.Position.Y)}
@@ -6766,13 +6762,13 @@ do
             end
         end
         --
-        library.ended[#library.ended + 1] = function(Input)
+        kazusaclubU.ended[#kazusaclubU.ended + 1] = function(Input)
             if list.scrolling[1] and Input.UserInputType == Enum.UserInputType.MouseButton1 then
                 list.scrolling = {false, nil}
             end
         end
         --
-        library.changed[#library.changed + 1] = function(Input)
+        kazusaclubU.changed[#kazusaclubU.changed + 1] = function(Input)
             if list.scrolling[1] then
                 local MouseLocation = utility:MouseLocation()
                 local Position = math.clamp((MouseLocation.Y - list_scroll.Position.Y - list.scrolling[2]), 0, ((list_scroll.Size.Y - list_bar.Size.Y)))
@@ -6796,8 +6792,8 @@ do
             end
         end)
         --
-        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not library.pointers[tostring(pointer)] then
-            library.pointers[tostring(pointer)] = list
+        if pointer and tostring(pointer) ~= "" and tostring(pointer) ~= " " and not kazusaclubU.pointers[tostring(pointer)] then
+            kazusaclubU.pointers[tostring(pointer)] = list
         end
         --
         list:UpdateScroll()
@@ -6808,4 +6804,8 @@ do
     end
 end
 --
-return library, utility, library.pointers, theme
+return kazusaclubU, utility, kazusaclubU.pointers, theme
+
+local function loadReplicatedDrawingLib()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/yukvx/Kazusa.club/refs/heads/main/library/drawing.lua"))();
+end
