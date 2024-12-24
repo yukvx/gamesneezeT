@@ -1,5 +1,5 @@
 --
-function loadReplicatedDrawingLib()
+local function loadReplicatedDrawingLib()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/yukvx/Kazusa.club/refs/heads/main/library/drawing.lua"))();
 end
 --
