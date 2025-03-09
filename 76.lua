@@ -394,7 +394,7 @@ do
                 else
                     if imageLink then
                         data = game:HttpGet(imageLink)
-                        --writefile(library.folders.assets.."/"..imageName..".png", data)
+                        writefile(library.folders.assets.."/"..imageName..".png", data)
                     else
                         return
                     end
