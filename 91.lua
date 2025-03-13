@@ -173,7 +173,11 @@ do
                     local text = Drawing.new("Text")
                     text.Font = 3
                     text.Visible = true
-                    text.Outline = window.isVisible ~= true
+                    if window.isVisible ~= true then 
+                    text.Outline = false
+                    else
+                    text.Outline = true
+                    end
                     text.Center = false
                     text.Color = Color3.fromRGB(255,255,255)
                     text.ZIndex = 50
@@ -1290,7 +1294,7 @@ do
                     Position = utility:Position(1, -(BoxSize.X - 1), 0, 20, esppreview_frame_previewbox),
                     Color = Color3.fromRGB(0, 0, 0),
                     Filled = false,
-                    Visible = window.isVisible ~= true,
+                    --Visible = window.isVisible ~= true,
                     Thickness = 2.5
                 }, window.VisualPreview.Drawings);boxoutline = preview_boxoutline
                 --
@@ -1299,7 +1303,7 @@ do
                     Position = utility:Position(0, 0, 0, 0, preview_boxoutline),
                     Color = Color3.fromRGB(255, 255, 255),
                     Filled = false,
-                    Visible = window.isVisible ~= true,
+                    --Visible = window.isVisible ~= true,
                     Thickness = 0.6
                 }, window.VisualPreview.Drawings)
                 --
